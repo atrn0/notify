@@ -1,0 +1,9 @@
+version: "3"
+services:
+  notify:
+    container_name: notify
+    build: .
+    environment:
+      - BBEXCITE_TRAFFIC_COOKIE
+      - SLACK_SIGNING_SECRET
+      - SLACK_BOT_TOKEN
