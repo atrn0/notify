@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      - name: Set docker context
+        run: |
+          docker context create --default-stack-orchestrator=swarm --docker "host=ssh://${SSH_USERNAME}@${SSH_IP}:${SSH_PORT}" remote
+          docker context use remote
+        env:
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          SSH_IP: ${{ secrets.SSH_IP }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+      - uses: actions/checkout@v2
+      - name: Deploy
+        run: |
+          docker-compose --context remote build
+          docker-compose --context remote up --force-recreate -d
+        env:
+          BBEXCITE_TRAFFIC_COOKIE: ${{ secrets.BBEXCITE_TRAFFIC_COOKIE }}
+          SLACK_SIGNING_SECRET: ${{ secrets.SLACK_SIGNING_SECRET }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          
+          
