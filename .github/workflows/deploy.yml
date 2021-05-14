@@ -13,7 +13,8 @@ jobs:
         with:
           key: ${{ secrets.SSH_KEY }}
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
-      - name: Set docker context
+      - uses: actions/checkout@v2
+      - name: Setup docker context
         run: |
           docker context create --default-stack-orchestrator=swarm --docker "host=ssh://${SSH_USERNAME}@${SSH_IP}:${SSH_PORT}" remote
           docker context use remote
@@ -21,7 +22,6 @@ jobs:
           SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
           SSH_IP: ${{ secrets.SSH_IP }}
           SSH_PORT: ${{ secrets.SSH_PORT }}
-      - uses: actions/checkout@v2
       - name: Deploy
         run: |
           docker-compose --context remote build
