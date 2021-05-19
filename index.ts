@@ -50,7 +50,8 @@ const app = new App({
   token: slackBotToken,
 })
 
-const job = schedule.scheduleJob("0 0 13 * * *", async () => {
+// 13:00 JST everyday
+const job = schedule.scheduleJob("0 0 4 * * *", async () => {
   let data
   try {
     data = await fetchTraffic()
