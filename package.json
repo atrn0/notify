@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "dry": "ts-node dry.ts"
   },
   "dependencies": {
     "@slack/bolt": "^3.3.0",
