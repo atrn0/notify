@@ -73,7 +73,5 @@ const notifyTraffic = async () => {
   }
 }
 
-notifyTraffic()
-
 // 13:00 JST everyday
 const job = schedule.scheduleJob("0 0 4 * * *", notifyTraffic)
