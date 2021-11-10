@@ -4,6 +4,8 @@ import { fetchTraffic, parseTraffic } from "./traffic"
 import { takeScreenshot } from "./electricity_nature"
 import { Upload } from "./gyazo"
 
+const CHANNEL = "C02LPDMMDR8"
+
 const slackBotToken = process.env.SLACK_BOT_TOKEN
 const app = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -13,7 +15,7 @@ const app = new App({
 const notifyError = async (message: string) => {
   const res = await app.client.chat.postMessage({
     token: slackBotToken,
-    channel: "C02CY99N79Q",
+    channel: CHANNEL,
     text: message,
   })
   console.log(res)
@@ -34,7 +36,7 @@ const notifyTraffic = async () => {
   try {
     const res = await app.client.chat.postMessage({
       token: slackBotToken,
-      channel: "C02CY99N79Q",
+      channel: CHANNEL,
       text: traffic,
       username: "インターネット",
       icon_emoji: ":pager:",
@@ -53,7 +55,7 @@ const notifyElectricity = async () => {
     )
     const res = await app.client.chat.postMessage({
       token: slackBotToken,
-      channel: "C02CY99N79Q",
+      channel: CHANNEL,
       text: `${todayURL}\n${yesterdayURL}`,
       username: "電力使用量",
       icon_emoji: ":electric_plug:",
