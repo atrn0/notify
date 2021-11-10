@@ -13,7 +13,7 @@ export const takeScreenshot = async () => {
     url: "https://electricity-api.nature.global/1",
   })
   await page.goto("https://electricity.nature.global/home")
-  await page.waitForSelector("g")
+  await page.waitForSelector("g", { timeout: 5000 })
 
   const today = await page.screenshot({
     clip: { x: 0, y: 990, width: 1000, height: 170 },
@@ -28,5 +28,3 @@ export const takeScreenshot = async () => {
   await browser.close()
   return [today, yesterday] as Buffer[]
 }
-
-takeScreenshot()
