@@ -48,6 +48,7 @@ RUN apt-get update \
   lsb-release \
   wget \
   xdg-utils \
+  libxshmfence1 \
   --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 
